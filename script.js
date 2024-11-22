@@ -1,10 +1,11 @@
 const canvas = document.getElementById('gameCanvas');
+canvas.width = 560; // Ancho ajustado para incluir 2 bloques adicionales a cada lado
 const ctx = canvas.getContext('2d');
 let gameInterval;
 let greenBlockRemovalInterval;
 
 const player = {
-    x: 180,
+    x: 260, // Ajuste inicial para centrar al jugador en el nuevo tamaño del canvas
     y: 550,
     width: 30,
     height: 30,
@@ -28,10 +29,10 @@ let startTime;
 
 function startGame(dificultad) {
     document.getElementById('menu').style.display = 'none';
-    document.getElementById('additionalInfo1').style.display = 'block';
-    document.getElementById('additionalInfo2').style.display = 'block';
     canvas.style.display = 'block';
     document.getElementById('stats').style.display = 'flex';
+    document.getElementById('additionalInfo1').style.display = 'block';
+    document.getElementById('additionalInfo2').style.display = 'block';
     player.greenBlocks = 0;
     player.points = 0;
     contador = 0;
@@ -89,7 +90,7 @@ function createBlock() {
     }
 
     const block = {
-        x: Math.floor(Math.random() * 10) * 40,
+        x: Math.floor(Math.random() * 14) * 40, // Ajuste para el nuevo tamaño del canvas (14 bloques de ancho)
         y: 0,
         width: 40,
         height: 40,
@@ -104,7 +105,7 @@ function update() {
 
         if (block.y + block.height > canvas.height) {
             block.y = 0;
-            block.x = Math.floor(Math.random() * 10) * 40;
+            block.x = Math.floor(Math.random() * 14) * 40; // Ajuste para el nuevo tamaño del canvas (14 bloques de ancho)
         }
 
         if (block.color === 'gold') {
@@ -220,6 +221,7 @@ function resetGame() {
     document.getElementById('stats').style.display = 'none';
     document.getElementById('additionalInfo1').style.display = 'none';
     document.getElementById('additionalInfo2').style.display = 'none';
+    location.reload(); // Recargar la página para reiniciar el juego
 }
 
 window.addEventListener('keydown', function(event) {
