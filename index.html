@@ -6,18 +6,22 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Bloque Alfa 0.6</h1>
+    <h1>Bloque Alfa 0.8</h1>
     <div id="menu">
+        <!-- Otros elementos del menú -->
+        <label for="infinito">Modo Infinito</label>
+        <input type="checkbox" id="infinito">
+        <br>
+        <label for="monedas">Modo Monedas</label>
+        <input type="checkbox" id="monedas">
+        <br>
         <button onclick="startGame('facil')">Fácil</button>
         <button onclick="startGame('normal')">Normal</button>
         <button onclick="startGame('dificil')">Difícil</button>
         <button onclick="startGame('extremo')">Extremo</button>
-        <div>
-            <label for="infinito">Modo Infinito: </label>
-            <input type="checkbox" id="infinito">
-        </div>
     </div>
     <canvas id="gameCanvas" width="400" height="600" style="display: none;"></canvas>
+    
     <script src="script.js"></script>
 </body>
 </html>

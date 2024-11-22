@@ -13,13 +13,15 @@ const player = {
     canJump: false,
     speedBoost: false,
     invincible: false,
-    greenBlocks: 0
+    greenBlocks: 0,
+    points: 0
 };
 
 const blocks = [];
 let blockInterval = 2000;
 let blockSpeed = 2;
 let modoInfinito = false;
+let modoMonedas = false;
 let vidas = 5;
 let contador = 0;
 let startTime;
@@ -28,6 +30,7 @@ function startGame(dificultad) {
     document.getElementById('menu').style.display = 'none';
     canvas.style.display = 'block';
     player.greenBlocks = 0;
+    player.points = 0;
     contador = 0;
     startTime = new Date();
 
@@ -54,6 +57,7 @@ function startGame(dificultad) {
     }
 
     modoInfinito = document.getElementById('infinito').checked;
+    modoMonedas = document.getElementById('monedas').checked;
 
     clearInterval(gameInterval);
     gameInterval = setInterval(createBlock, blockInterval);
@@ -70,7 +74,16 @@ function setGreenBlockRemovalInterval(interval) {
 }
 
 function createBlock() {
-    const blockColor = Math.random() < 0.5 ? 'red' : (Math.random() < 0.8 ? 'green' : 'blue');
+    let blockColor;
+    if (modoMonedas) {
+        blockColor = Math.random() < 0.4 ? 'red' : (Math.random() < 0.8 ? 'green' : 'blue');
+        if (Math.random() < 0.1) {
+            blockColor = 'gold';
+        }
+    } else {
+        blockColor = Math.random() < 0.5 ? 'red' : (Math.random() < 0.8 ? 'green' : 'blue');
+    }
+
     const block = {
         x: Math.floor(Math.random() * 10) * 40,
         y: 0,
@@ -90,7 +103,10 @@ function update() {
             block.x = Math.floor(Math.random() * 10) * 40;
         }
 
-        if (!player.invincible && block.y + block.height >= player.y && block.y + block.height * 0.75 <= player.y + player.height && block.x <= player.x + player.width && block.x + block.width >= player.x) {
+        if (block.color === 'gold') {
+            player.points++;
+            blocks.splice(index, 1);
+        } else if (!player.invincible && block.y + block.height >= player.y && block.y + block.height * 0.75 <= player.y + player.height && block.x <= player.x + player.width && block.x + block.width >= player.x) {
             if (block.color === 'red') {
                 vidas--;
                 if (vidas <= 0) {
@@ -107,9 +123,14 @@ function update() {
                 blocks.splice(index, 1);
             } else if (block.color === 'blue') {
                 player.speedBoost = true;
+                player.invincible = true;
                 blocks.splice(index, 1);
                 setTimeout(() => player.speedBoost = false, 5000);
+                setTimeout(() => player.invincible = false, 2000);
             }
+        } else if (block.color === 'green' && block.y + block.height >= player.y && block.y + block.height * 0.75 <= player.y + player.height && block.x <= player.x + player.width && block.x + block.width >= player.x) {
+            player.greenBlocks++;
+            blocks.splice(index, 1);
         }
 
         if (block.color === 'red' && block.y + block.height >= player.y && player.y + player.height === block.y) {
@@ -161,9 +182,20 @@ function draw() {
     ctx.fillText(`Bloques verdes: ${player.greenBlocks}`, 10, 60);
     ctx.fillText(`Tiempo: ${timeString}`, 10, 90);
 
+    if (modoMonedas) {
+        ctx.fillText(`Puntos: ${player.points}`, 10, 120);
+    }
+
     blocks.forEach(block => {
-        ctx.fillStyle = block.color;
-        ctx.fillRect(block.x, block.y, block.width, block.height);
+        if (block.color === 'gold') {
+            ctx.fillStyle = 'gold';
+            ctx.fillRect(block.x, block.y, block.width, block.height);
+            ctx.strokeStyle = 'black';
+            ctx.strokeRect(block.x, block.y, block.width, block.height);
+        } else {
+            ctx.fillStyle = block.color;
+            ctx.fillRect(block.x, block.y, block.width, block.height);
+        }
     });
 }
 
@@ -183,6 +215,9 @@ function resetGame() {
     player.speedBoost = false;
     player.invincible = false;
     player.greenBlocks = 0;
+    player.points = 0;
+    document.getElementById('infinito').checked = false;
+    document.getElementById('monedas').checked = false;
     document.getElementById('menu').style.display = 'block';
     canvas.style.display = 'none';
 }
