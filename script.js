@@ -89,7 +89,7 @@ function update() {
                     player.x = (canvas.width - player.width) / 2;
                     player.y = canvas.height - player.height - 10;
                     player.invincible = true; // Dar invencibilidad al jugador
-                    setTimeout(() => player.invincible = false, 5000); // Duración de la invencibilidad
+                    setTimeout(() => player.invincible = false, 2000); // Duración de la invencibilidad
                 }
             } else if (block.color === 'green') {
                 player.greenBlocks++; // Incrementar contador de bloques verdes
@@ -108,7 +108,7 @@ function update() {
     });
 
     // Detectar si el jugador ha llegado a la cima
-    if (player.y <= 0) {
+    if (player.y <= 80) { // Ajustar la altura de la línea de meta dos bloques hacia abajo
         alert("¡Felicidades! Has ganado el juego.");
         resetGame(); // Redirigir al menú
     }
@@ -142,8 +142,8 @@ function draw() {
     // Dibujar la línea de meta
     ctx.strokeStyle = 'blue';
     ctx.beginPath();
-    ctx.moveTo(0, 10);
-    ctx.lineTo(canvas.width, 10);
+    ctx.moveTo(0, 80); // Ajustar la altura de la línea de meta
+    ctx.lineTo(canvas.width, 80);
     ctx.stroke();
 
     // Mostrar vidas restantes
@@ -185,10 +185,12 @@ function resetGame() {
 
 window.addEventListener('keydown', function(event) {
     const movementSpeed = player.speedBoost ? 20 : 10; // Duplicar la velocidad si hay aumento
-    if (event.key === 'ArrowLeft') player.x -= movementSpeed;
-    if (event.key === 'ArrowRight') player.x += movementSpeed;
-    if (event.key === 'ArrowUp' && player.greenBlocks > 0) {
-        player.y -= 60; // El jugador salta
-        player.greenBlocks--; // Decrementar contador de bloques verdes
+    if (event.key === 'ArrowLeft' || event.key === 'a') player.x -= movementSpeed;
+    if (event.key === 'ArrowRight' || event.key === 'd') player.x += movementSpeed;
+    if (event.key === 'ArrowUp' || event.key === 'w') {
+        if (player.greenBlocks > 0) {
+            player.y -= 60; // El jugador salta
+            player.greenBlocks--; // Decrementar contador de bloques verdes
+        }
     }
 });
