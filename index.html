@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Subida de Bloques</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Subida de Bloques</h1>
+    <div id="menu">
+        <button onclick="startGame('facil')">Fácil</button>
+        <button onclick="startGame('normal')">Normal</button>
+        <button onclick="startGame('dificil')">Difícil</button>
+        <button onclick="startGame('extremo')">Extremo</button>
+        <div>
+            <label for="infinito">Modo Infinito: </label>
+            <input type="checkbox" id="infinito">
+        </div>
+    </div>
+    <canvas id="gameCanvas" width="400" height="600" style="display: none;"></canvas>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+canvas {
+    border: 1px solid black;
+    margin-top: 20px;
+}
+
+#menu {
+    text-align: center;
+}
+
+button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+div {
+    margin-top: 20px;
+}
+
+label {
+    font-size: 16px;
+}
+
