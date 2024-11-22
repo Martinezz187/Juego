@@ -2,26 +2,37 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Bloque</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Bloque Alfa 0.8</h1>
-    <div id="menu">
-        <!-- Otros elementos del menú -->
-        <label for="infinito">Modo Infinito</label>
-        <input type="checkbox" id="infinito">
-        <br>
-        <label for="monedas">Modo Monedas</label>
-        <input type="checkbox" id="monedas">
-        <br>
-        <button onclick="startGame('facil')">Fácil</button>
-        <button onclick="startGame('normal')">Normal</button>
-        <button onclick="startGame('dificil')">Difícil</button>
-        <button onclick="startGame('extremo')">Extremo</button>
+    <div id="container">
+        <div id="additionalInfo1" class="info-box">Información adicional 1</div>
+        <div id="menu">
+            <h1>Menu</h1>
+            <button onclick="startGame('facil')">Fácil</button>
+            <button onclick="startGame('normal')">Normal</button>
+            <button onclick="startGame('dificil')">Difícil</button>
+            <button onclick="startGame('extremo')">Extremo</button>
+            <div>
+                <input type="checkbox" id="infinito">
+                <label for="infinito">Modo Infinito</label>
+            </div>
+            <div>
+                <input type="checkbox" id="monedas">
+                <label for="monedas">Modo Monedas</label>
+            </div>
+        </div>
+        <div id="additionalInfo2" class="info-box">Información adicional 2</div>
     </div>
-    <canvas id="gameCanvas" width="400" height="600" style="display: none;"></canvas>
-    
+    <div id="stats" style="display: none;">
+        <div class="stat">Tiempo: <span id="time">0:00</span></div>
+        <div class="stat">Bloques Verdes: <span id="greenBlocks">0</span></div>
+        <div class="stat">Vidas: <span id="lives">0</span></div>
+        <div class="stat" id="points" style="display: none;">Puntos: <span id="pointsValue">0</span></div>
+    </div>
+    <canvas id="gameCanvas" width="400" height="600"></canvas>
     <script src="script.js"></script>
 </body>
 </html>

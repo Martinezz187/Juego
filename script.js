@@ -28,7 +28,10 @@ let startTime;
 
 function startGame(dificultad) {
     document.getElementById('menu').style.display = 'none';
+    document.getElementById('additionalInfo1').style.display = 'block';
+    document.getElementById('additionalInfo2').style.display = 'block';
     canvas.style.display = 'block';
+    document.getElementById('stats').style.display = 'flex';
     player.greenBlocks = 0;
     player.points = 0;
     contador = 0;
@@ -58,6 +61,7 @@ function startGame(dificultad) {
 
     modoInfinito = document.getElementById('infinito').checked;
     modoMonedas = document.getElementById('monedas').checked;
+    document.getElementById('points').style.display = modoMonedas ? 'block' : 'none';
 
     clearInterval(gameInterval);
     gameInterval = setInterval(createBlock, blockInterval);
@@ -156,6 +160,14 @@ function update() {
 
     const now = new Date();
     contador = Math.floor((now - startTime) / 1000);
+
+    // Actualizar los contadores en el HTML
+    document.getElementById('lives').textContent = `${vidas}`;
+    document.getElementById('greenBlocks').textContent = `${player.greenBlocks}`;
+    document.getElementById('time').textContent = `${Math.floor(contador / 60)}:${contador % 60 < 10 ? '0' : ''}${contador % 60}`;
+    if (modoMonedas) {
+        document.getElementById('pointsValue').textContent = `${player.points}`;
+    }
 }
 
 function draw() {
@@ -171,20 +183,6 @@ function draw() {
     ctx.moveTo(0, blockSpeed >= 3 ? 10 : 80);
     ctx.lineTo(canvas.width, blockSpeed >= 3 ? 10 : 80);
     ctx.stroke();
-
-    ctx.fillStyle = 'black';
-    ctx.font = '20px Arial';
-    ctx.fillText(`Vidas: ${vidas}`, 10, 30);
-
-    const minutes = Math.floor(contador / 60);
-    const seconds = contador % 60;
-    const timeString = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-    ctx.fillText(`Bloques verdes: ${player.greenBlocks}`, 10, 60);
-    ctx.fillText(`Tiempo: ${timeString}`, 10, 90);
-
-    if (modoMonedas) {
-        ctx.fillText(`Puntos: ${player.points}`, 10, 120);
-    }
 
     blocks.forEach(block => {
         if (block.color === 'gold') {
@@ -219,7 +217,9 @@ function resetGame() {
     document.getElementById('infinito').checked = false;
     document.getElementById('monedas').checked = false;
     document.getElementById('menu').style.display = 'block';
-    canvas.style.display = 'none';
+    document.getElementById('stats').style.display = 'none';
+    document.getElementById('additionalInfo1').style.display = 'none';
+    document.getElementById('additionalInfo2').style.display = 'none';
 }
 
 window.addEventListener('keydown', function(event) {
